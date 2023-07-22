@@ -1,5 +1,4 @@
 ---
-
 apiVersion: charts.kubealex.com/v1
 kind: K8SMediaserver
 metadata:
@@ -20,7 +19,7 @@ spec:
       pvcName: mediaserver-pvc
       size: 5Gi
       accessMode: ""
-      pvcStorageClass: microk8s-hostpath
+      pvcStorageClass: ""
       # the path starting from the top level of the pv you're passing. If your share is server.local/share/, then tv is server.local/share/media/tv
       subPaths:
         tv: media/tv
@@ -33,7 +32,7 @@ spec:
       #  hostPath:
       #    path: /mnt/share
     ingress:
-      ingressClassName: nginx
+      ingressClassName: ""
 
   sonarr:
     enabled: true
@@ -248,12 +247,12 @@ spec:
     claim: "CHANGEME"
     replicaCount: 1
     container:
-      image: docker.io/linuxserver/jellyfin
+      image: docker.io/linuxserver/plex
       nodeSelector: {}
-      port: 8096
+      port: 32400
     service:
       type: ClusterIP
-      port: 8096
+      port: 32400
       nodePort:
       # Defines an additional LB service, requires cloud provider service or MetalLB
       extraLBService: false
