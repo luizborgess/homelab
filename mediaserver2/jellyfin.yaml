@@ -1,32 +1,31 @@
-
 ---
 ### DEPLOYMENT
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jackett
+  name: jellyfin
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: jackett
+      app.kubernetes.io/name: jellyfin
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: jackett
-        app: jackett
+        app.kubernetes.io/name: jellyfin
+        app: jellyfin
     spec:
       containers:
-        - name: jackett
+        - name: jellyfin
           image: lscr.io/linuxserver/jellyfin
           ports:
-            - name: jackett-port
+            - name: jellyfin-port
               containerPort: 8096
               protocol: TCP
           volumeMounts:
             - name: mediaserver-volume
               mountPath: "/config"
-              subPath: "config/jackett"
+              subPath: "config/jellyfin"
       volumes:
         - name: mediaserver-volume
           persistentVolumeClaim:
@@ -37,34 +36,34 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: jackett
+  name: jellyfin
 spec:
   type: ClusterIP
   ports:
     - port: 8096
       targetPort: 8096
       protocol: TCP
-      name: jackett-port
+      name: jellyfin-port
   selector:
-    app: jackett
+    app: jellyfin
 
 ---
 ### INGRESS
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: jackett
+  name: jellyfin
 spec:
   ingressClassName: nginx
   rules:
-    - host: media.homelab.com
+    - host: jellyfin.homelab.com
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: jackett
+                name: jellyfin
                 port:
                   number: 8096
 ---
