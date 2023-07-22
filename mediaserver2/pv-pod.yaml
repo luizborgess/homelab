@@ -1,0 +1,69 @@
+
+### DEPLOYMENT
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jackett
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: jackett
+          image: docker.io/linuxserver/jackett
+          imagePullPolicy: Always
+          readinessProbe:
+            tcpSocket:
+              port: 9117
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          ports:
+            - name: jackett-port
+              containerPort: 9117
+              protocol: TCP
+          volumeMounts:
+            - name: mediaserver-volume
+              mountPath: "/config"
+              subPath: "config/jackett"
+      volumes:
+        - name: mediaserver-volume
+          persistentVolumeClaim:
+            claimName: pv-claim
+
+---
+### SERVICES
+apiVersion: v1
+kind: Service
+metadata:
+  name: jackett
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9117
+      targetPort: 9117
+      protocol: TCP
+      name: jackett-port
+  selector:
+    app: jackett
+
+
+---
+### INGRESS
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jackett
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: k8s-mediaserver.k8s.test
+      http:
+        paths:
+          - path: /jackett
+            pathType: Prefix
+            backend:
+              service:
+                name: jackett
+                port:
+                  number: 9117
+---
