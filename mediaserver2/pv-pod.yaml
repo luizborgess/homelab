@@ -1,32 +1,3 @@
----
-### CONFIGMAPS
-## INIT-CONTAINER
-apiVersion: v1
-data:
-  ServerConfig.json: |
-    {
-      "BasePathOverride": "{{ .Values.jackett.ingress.path }}"
-    }
-  init-jackett.sh: |
-    #!/bin/bash
-    echo "### Initializing config ###"
-    if [ ! -f /jackett-config/ServerConfig.json ]; then
-      cp -n /init-jackett/ServerConfig.json /jackett-config/ServerConfig.json
-      echo "### No configuration found, intialized with default settings ###"
-    fi
-kind: ConfigMap
-metadata:
-  name: init-jackett-cm
----
-
-## APPLICATION
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: jackett-config
-data:
-  PGID: 1000
-  PUID: 1000
 
 ---
 ### DEPLOYMENT
@@ -45,31 +16,18 @@ spec:
         app.kubernetes.io/name: jackett
         app: jackett
     spec:
-      initContainers:
-        - name: config-jackett
-          image: docker.io/ubuntu:groovy
-          command: ["/init-jackett/init-jackett.sh"]
-          volumeMounts:
-            - mountPath: /init-jackett
-              name: init-files-jackett
-            - name: mediaserver-volume
-              mountPath: /jackett-config
-              subPath: "config/jackett/Jackett"
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000 
       containers:
         - name: jackett
-          image: docker.io/linuxserver/jackett
+          image: lscr.io/linuxserver/jellyfin
           imagePullPolicy: Always
           readinessProbe:
             tcpSocket:
-              port: 9117
+              port: 8096
             initialDelaySeconds: 5
             periodSeconds: 10
           ports:
             - name: jackett-port
-              containerPort: 9117
+              containerPort: 8096
               protocol: TCP
           volumeMounts:
             - name: mediaserver-volume
@@ -93,8 +51,8 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: 9117
-      targetPort: 9117
+    - port: 8096
+      targetPort: 8096
       protocol: TCP
       name: jackett-port
   selector:
@@ -118,5 +76,5 @@ spec:
               service:
                 name: jackett
                 port:
-                  number: 9117
+                  number: 8096
 ---
