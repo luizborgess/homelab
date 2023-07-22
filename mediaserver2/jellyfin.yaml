@@ -15,6 +15,7 @@ spec:
         app.kubernetes.io/name: jellyfin
         app: jellyfin
     spec:
+      hostNetwork: true
       containers:
         - name: jellyfin
           image: lscr.io/linuxserver/jellyfin
