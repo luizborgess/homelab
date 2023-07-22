@@ -1,0 +1,72 @@
+---
+### DEPLOYMENT
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbitorrent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: qbitorrent
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: qbitorrent
+        app: qbitorrent
+    spec:
+      containers:
+        - name: qbitorrent
+          image: lscr.io/linuxserver/qbittorrent
+          ports:
+            - name: qbitorrent-port
+              containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - name: mediaserver-volume
+              mountPath: "/movies"
+              subPath: "media/movies"
+            - name: mediaserver-volume
+              mountPath: /tv
+              subPath: "media/tv"              
+      volumes:
+        - name: mediaserver-volume
+          persistentVolumeClaim:
+            claimName: pv-claim
+
+---
+### SERVICES
+apiVersion: v1
+kind: Service
+metadata:
+  name: qbitorrent
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: qbitorrent-port
+  selector:
+    app: qbitorrent
+
+---
+### INGRESS
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: qbitorrent
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: qbitorrent.homelab.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: qbitorrent
+                port:
+                  number: 8080
+---
