@@ -59,7 +59,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: qbitorrent.homelab.com
+    - host: qbit.homelab.com
       http:
         paths:
           - path: /
