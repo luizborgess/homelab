@@ -6,7 +6,14 @@ metadata:
   name: jackett
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: jackett
   template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: jackett
+        app: jackett
     spec:
       containers:
         - name: jackett
@@ -43,7 +50,8 @@ spec:
       targetPort: 9117
       protocol: TCP
       name: jackett-port
-
+  selector:
+    app: jackett
 
 ---
 ### INGRESS
