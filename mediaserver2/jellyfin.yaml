@@ -24,8 +24,11 @@ spec:
               protocol: TCP
           volumeMounts:
             - name: mediaserver-volume
-              mountPath: "/config"
-              subPath: "config/jellyfin"
+              mountPath: "/movies"
+              subPath: "media/movies"
+            - name: mediaserver-volume
+              mountPath: /tv
+              subPath: "media/tv"              
       volumes:
         - name: mediaserver-volume
           persistentVolumeClaim:
