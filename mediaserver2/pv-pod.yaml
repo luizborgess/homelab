@@ -1,4 +1,13 @@
+## APPLICATION
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jackett-config
+data:
+  PGID: 1000
+  PUID: 1000
 
+---
 ### DEPLOYMENT
 apiVersion: apps/v1
 kind: Deployment
@@ -15,6 +24,19 @@ spec:
         app.kubernetes.io/name: jackett
         app: jackett
     spec:
+      initContainers:
+        - name: config-jackett
+          image: docker.io/ubuntu:groovy
+          command: ["/init-jackett/init-jackett.sh"]
+          volumeMounts:
+            - mountPath: /init-jackett
+              name: init-files-jackett
+            - name: mediaserver-volume
+              mountPath: /jackett-config
+              subPath: "config/jackett/Jackett"
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000 
       containers:
         - name: jackett
           image: docker.io/linuxserver/jackett
