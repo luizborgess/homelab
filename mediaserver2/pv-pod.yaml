@@ -43,8 +43,6 @@ spec:
       targetPort: 9117
       protocol: TCP
       name: jackett-port
-  selector:
-    app: jackett
 
 
 ---
