@@ -32,7 +32,7 @@ spec:
       volumes:
         - name: mediaserver-volume
           persistentVolumeClaim:
-            claimName: host-storage
+            claimName: host-storage2
 
 ---
 ### SERVICES
