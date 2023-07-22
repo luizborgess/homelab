@@ -9,7 +9,5 @@ spec:
     storage: 100Gi
   accessModes:
     - ReadWriteOnce
-  reclaimPolicy:
-    - Recycle
   hostPath:
     path: "/media"
