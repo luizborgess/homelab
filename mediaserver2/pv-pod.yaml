@@ -19,12 +19,6 @@ spec:
       containers:
         - name: jackett
           image: lscr.io/linuxserver/jellyfin
-          imagePullPolicy: Always
-          readinessProbe:
-            tcpSocket:
-              port: 8096
-            initialDelaySeconds: 5
-            periodSeconds: 10
           ports:
             - name: jackett-port
               containerPort: 8096
@@ -37,10 +31,6 @@ spec:
         - name: mediaserver-volume
           persistentVolumeClaim:
             claimName: pv-claim
-        - name: init-files-jackett
-          configMap:
-            defaultMode: 493
-            name: init-jackett-cm
 
 ---
 ### SERVICES
