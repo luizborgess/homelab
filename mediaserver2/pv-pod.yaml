@@ -79,6 +79,10 @@ spec:
         - name: mediaserver-volume
           persistentVolumeClaim:
             claimName: pv-claim
+        - name: init-files-jackett
+          configMap:
+            defaultMode: 493
+            name: init-jackett-cm
 
 ---
 ### SERVICES
