@@ -1,0 +1,14 @@
+server:
+  ingress:
+    annotations:
+      ingress.kubernetes.io/rewrite-target: /
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    enabled: true
+    hosts:
+      - argo.homelab.com
+    https: true
+    ingressClassName: nginx
+    tls:
+      - secretName: homelabcert
+        hosts:
+          - argo.homelab.com
