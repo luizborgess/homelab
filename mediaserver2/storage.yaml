@@ -17,6 +17,7 @@ kind: PersistentVolume
 metadata:
   name: hostpath-pv
 spec:
+  allowVolumeExpansion: true
   storageClassName: manual
   capacity:
     storage: 200Gi
