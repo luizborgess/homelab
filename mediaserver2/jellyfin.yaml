@@ -23,17 +23,15 @@ spec:
             - name: jellyfin-port
               containerPort: 8096
               protocol: TCP
-          volumeMounts:
-            - name: mediaserver-volume
-              mountPath: "/movies"
-              subPath: "media/movies"
-            - name: mediaserver-volume
+          volumeMounts:              
+            - name: hostpath-volume
+              mountPath: /movies
+            - name: hostpath-volume
               mountPath: /tv
-              subPath: "media/tv"              
       volumes:
-        - name: mediaserver-volume
+        - name: hostpath-volume
           persistentVolumeClaim:
-            claimName: host-storage2
+            claimName: hostpath-pvc
 
 ---
 ### SERVICES
