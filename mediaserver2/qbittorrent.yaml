@@ -23,18 +23,9 @@ spec:
               containerPort: 8080
               protocol: TCP
           volumeMounts:
-            - name: mediaserver-volume
-              mountPath: "/movies"
-              subPath: "media/movies"
-            - name: mediaserver-volume
-              mountPath: /tv
-              subPath: "media/tv"
             - name: hostpath-volume
               mountPath: /downloads                           
       volumes:
-        - name: mediaserver-volume
-          persistentVolumeClaim:
-            claimName: host-storage2
         - name: hostpath-volume
           persistentVolumeClaim:
             claimName: hostpath-pvc
