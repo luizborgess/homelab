@@ -24,11 +24,16 @@ spec:
               protocol: TCP
           volumeMounts:
             - name: hostpath-volume
-              mountPath: /downloads                           
+              mountPath: /downloads
+            - name: hostpath-volume-config
+              mountPath: /config
       volumes:
         - name: hostpath-volume
           persistentVolumeClaim:
             claimName: hostpath-pvc
+        - name: hostpath-volume-config
+          persistentVolumeClaim:
+            claimName: hostpath-config
 ---
 ### SERVICES
 apiVersion: v1

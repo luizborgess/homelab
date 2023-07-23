@@ -23,3 +23,15 @@ spec:
     requests:
       storage: 120Gi
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: hostpath-config
+spec:
+  storageClassName: microk8s-hostpath
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
