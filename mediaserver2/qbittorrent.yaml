@@ -30,8 +30,7 @@ spec:
               mountPath: /tv
               subPath: "media/tv"
             - name: hostpath-volume
-              mountPath: /media
-              subPath: "media/2"                           
+              mountPath: /downloads                           
       volumes:
         - name: mediaserver-volume
           persistentVolumeClaim:
