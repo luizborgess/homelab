@@ -29,7 +29,7 @@ spec:
             - name: mediaserver-volume
               mountPath: /tv
               subPath: "media/tv"
-            - name: hostpath-pvc
+            - name: hostpath-volume
               mountPath: /media
               subPath: "media/2"                           
       volumes:
