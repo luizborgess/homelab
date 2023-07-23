@@ -28,12 +28,17 @@ spec:
               subPath: "media/movies"
             - name: mediaserver-volume
               mountPath: /tv
-              subPath: "media/tv"              
+              subPath: "media/tv"
+            - name: hostpath-pvc
+              mountPath: /media
+              subPath: "media/2"                           
       volumes:
         - name: mediaserver-volume
           persistentVolumeClaim:
             claimName: host-storage2
-
+        - name: hostpath-volume
+          persistentVolumeClaim:
+            claimName: hostpath-pvc
 ---
 ### SERVICES
 apiVersion: v1
