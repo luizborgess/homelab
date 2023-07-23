@@ -18,7 +18,7 @@ metadata:
   name: hostpath-pv
 spec:
   capacity:
-    storage: 100Gi
+    storage: 200Gi
   accessModes:
   - ReadWriteOnce
   hostPath:
