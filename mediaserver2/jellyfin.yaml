@@ -26,8 +26,10 @@ spec:
           volumeMounts:              
             - name: hostpath-volume
               mountPath: /movies
+              subPath: movies
             - name: hostpath-volume
               mountPath: /tv
+              subPath: tv
             - name: hostpath-volume-config
               mountPath: /config
       volumes:
