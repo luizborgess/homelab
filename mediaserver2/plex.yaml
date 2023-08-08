@@ -17,19 +17,17 @@ spec:
     spec:
       hostNetwork: true
       containers:
-        - env:                       # < environment variables. See https://hub.docker.com/r/linuxserver/plex
-          - name: PLEX_CLAIM
-            value: claim-XwVPsHsaakdfaq66tha9
-          - name: PGID
-            value: "\x31\x30\x30"    # < ASCII code for '100'
-          - name: PUID
-            value: "\x31\x30\x33\x35" # < ACII code for '1035'
-          - name: VERSION
-            value: latest
-          - name: TZ
-            value: Europe/Amsterdam
         - name: plex
           image: lscr.io/linuxserver/plex
+          env:  # < environment variables. See https://hub.docker.com/r/linuxserver/plex
+            - name: PGID
+              value: "\x31\x30\x30"    # < ASCII code for '100'
+            - name: PUID
+              value: "\x31\x30\x33\x35" # < ACII code for '1035'
+            - name: VERSION
+              value: latest
+            - name: TZ
+              value: Europe/Amsterdam
           ports:
             - containerPort: 32400     # < required network portnumber. See https://hub.docker.com/r/linuxserver/plex
               name: pms-web            # < reference name from the port in the service yaml
