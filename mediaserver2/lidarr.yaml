@@ -15,7 +15,6 @@ spec:
         app.kubernetes.io/name: lidarr
         app: lidarr
     spec:
-      hostNetwork: true
       containers:
         - name: lidarr
           image: lscr.io/linuxserver/lidarr
