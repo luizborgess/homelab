@@ -15,7 +15,6 @@ spec:
         app.kubernetes.io/name: jackett
         app: jackett
     spec:
-      hostNetwork: true
       containers:
         - name: jackett
           image: lscr.io/linuxserver/jackett
