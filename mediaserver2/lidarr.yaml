@@ -1,0 +1,81 @@
+---
+### DEPLOYMENT
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lidarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: lidarr
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: lidarr
+        app: lidarr
+    spec:
+      hostNetwork: true
+      containers:
+        - name: lidarr
+          image: lscr.io/linuxserver/lidarr
+          ports:
+            - name: lidarr-port
+              containerPort: 8686
+              protocol: TCP
+          volumeMounts:
+            - name: hostpath-volume-config
+              mountPath: /config
+            - name: hostpath-volume
+              mountPath: /downloads
+              subPath: downloads
+            - name: hostpath-volume
+              mountPath: /music
+              subPath: music                
+      volumes:
+        - name: hostpath-volume
+          persistentVolumeClaim:
+            claimName: hostpath-pvc
+        - name: hostpath-volume-config
+          persistentVolumeClaim:
+            claimName: hostpath-config
+
+
+---
+### SERVICES
+apiVersion: v1
+kind: Service
+metadata:
+  name: lidarr
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8686
+      targetPort: 8686
+      protocol: TCP
+      name: lidarr-port
+  selector:
+    app: lidarr
+
+---
+### INGRESS
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lidarr
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: lidarr.homelab.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: lidarr
+                port:
+                  number: 8686
+---
+
+
