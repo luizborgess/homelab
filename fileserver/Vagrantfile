@@ -1,0 +1,30 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+NODE_CPUS = 1
+NODE_MEMORY = 1024
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+DISK = 'hd.vmdk'
+
+
+Vagrant.configure("2") do |config|
+
+  config.vm.provider "virtualbox" do |v|
+    v.cpus = NODE_CPUS
+    v.memory = NODE_MEMORY
+    v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', DISK]
+    v.name = "Sirius"
+  end
+  
+  config.vm.disk :disk, size: "10GB", primary: true
+  config.vm.box = "almalinux/9"
+  config.vm.hostname = "sirius"
+  config.vm.network "public_network", ip: "192.168.1.80"
+
+  config.vm.provision "ansible", run: 'once' do |ansible|
+    ansible.compatibility_mode = "2.0"
+    ansible.playbook = "fileserver.yml"
+  end
+end
