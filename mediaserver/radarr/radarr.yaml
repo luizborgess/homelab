@@ -47,8 +47,8 @@ spec:
               value: "1000"
             - name: PGID
               value: "1000"   
-          volumeMounts: 
-            - mountPath: /config 
-              name: smb-config
-              readOnly: false
-              subPath: radarr/config
+#          volumeMounts: 
+#            - mountPath: /config 
+#              name: smb-config
+#              readOnly: false
+#              subPath: radarr/config
