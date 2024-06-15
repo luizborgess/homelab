@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   namespace: mediaserver
-  name: mediaserver-ing
+  name: radarr-ing
   annotations:
     cert-manager.io/cluster-issuer: cloudflare-issuer
 #    nginx.ingress.kubernetes.io/rewrite-target: /$2
@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: mediaserver.hlspace.org
+  - host: radarr.hlspace.org
     http:
       paths:
       - path: /
@@ -22,5 +22,5 @@ spec:
               number: 7878
   tls:
   - hosts:
-    - mediaserver.hlspace.org
-    secretName: mediaserver-server-tls
+    - radarr.hlspace.org
+    secretName: radarr-server-tls
