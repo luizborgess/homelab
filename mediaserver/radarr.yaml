@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: radarr
+  name: radarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: raddar
+  template:
+    metadata:
+      labels:
+        app: raddar
+  spec:
+    containers:
+      - name: radarr
+        image: linuxserver/radarr
+        ports:
+        - containerPort: 7878
+          name: webui
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - curl "http://localhost:7878/radarr/api/health?ApiKey=$(sed -ne '/ApiKey/{s/.*<ApiKey>\(.*\)<\/ApiKey>.*/\1/p;q;}' </config/config.xml)"
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - curl "http://localhost:7878/radarr/api/system/status?ApiKey=$(sed -ne '/ApiKey/{s/.*<ApiKey>\(.*\)<\/ApiKey>.*/\1/p;q;}' </config/config.xml)"
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        env:
+          - name: TZ
+            value: Pacific/Auckland
+          - name: PUID
+            value: "1000"
+          - name: PGID
+            value: "1000"
+        volumeMounts: 
+        - mountPath: /config 
+          name: htpc-home
+          subPath: radarr
+        - mountPath: /movies 
+          name: htpc-home
+          subPath: media/movies
+        - mountPath: /downloads 
+          name: htpc-home
+          subPath: downloads
