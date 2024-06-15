@@ -14,10 +14,10 @@ spec:
       labels:
         app: radarr
     spec:
-#      volumes:
-#        - name: smb-config
-#          persistentVolumeClaim:
-#            claimName: pvc-smb-data
+      volumes:
+        - name: smb-config
+          persistentVolumeClaim:
+            claimName: pvc-smb-data
       containers:
         - name: radarr
           image: linuxserver/radarr
@@ -47,7 +47,7 @@ spec:
               value: "1000"
             - name: PGID
               value: "1000"   
-#          volumeMounts: 
-#            - mountPath: /config 
-#              name: smb-config
-#              subPath: radarr/config
+          volumeMounts: 
+            - mountPath: /config 
+              name: smb-config
+              subPath: radarr/config
