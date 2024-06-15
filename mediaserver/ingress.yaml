@@ -10,7 +10,7 @@ spec:
   - host: mediaserver.hlspace.org
     http:
       paths:
-      - path: /foo
+      - path: /radarr
         pathType: Prefix
         backend:
           service:
