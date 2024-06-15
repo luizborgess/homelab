@@ -8,11 +8,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      run: raddar
+      run: radarr
   template:
     metadata:
       labels:
-        app: raddar
+        app: radarr
   spec:
     containers:
       - name: radarr
