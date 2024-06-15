@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: mediaserver
+  name: mediaserver-ing
+  annotations:
+    cert-manager.io/cluster-issuer: cloudflare-issuer
+spec:
+  rules:
+  - host: mediaserver.hlspace.org
+    http:
+      paths:
+      - path: /foo
+        pathType: Prefix
+        backend:
+          service:
+            name: radarr
+            port:
+              number: 7878
+  tls:
+  - hosts:
+    - mediaserver.hlspace.org
+    secretName: mediaserver-server-tls
