@@ -13,7 +13,7 @@ spec:
   - host: mediaserver.hlspace.org
     http:
       paths:
-      - path: /radarr
+      - path: /
         pathType: ImplementationSpecific
         backend:
           service:
