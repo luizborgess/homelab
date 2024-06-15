@@ -5,7 +5,7 @@ metadata:
   name: mediaserver-ing
   annotations:
     cert-manager.io/cluster-issuer: cloudflare-issuer
-    nginx.ingress.kubernetes.io/rewrite-target: /
+#    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
