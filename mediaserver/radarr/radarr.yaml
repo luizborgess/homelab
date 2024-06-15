@@ -43,3 +43,8 @@ spec:
               value: "1000"
             - name: PGID
               value: "1000"
+          volumes:
+            - name: init-files-radarr
+              configMap:
+                defaultMode: 493
+                name: init-radarr-cm          
