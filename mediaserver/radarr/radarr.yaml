@@ -14,10 +14,10 @@ spec:
       labels:
         app: radarr
     spec:
-      volumes:
-        - name: smb-config
-          persistentVolumeClaim:
-            claimName: pvc-smb-data
+#      volumes:
+#        - name: smb-config
+#          persistentVolumeClaim:
+#            claimName: pvc-smb-data
       containers:
         - name: radarr
           image: linuxserver/radarr
