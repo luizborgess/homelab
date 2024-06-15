@@ -10,4 +10,4 @@ spec:
     requests:
       storage: 5Gi
   volumeName: pv-smb-data
-  storageClassName: ""
+  storageClassName: smb

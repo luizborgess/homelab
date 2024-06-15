@@ -9,6 +9,7 @@ spec:
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
+  storageClassName: smb
   mountOptions:
     - dir_mode=0777
     - file_mode=0777
