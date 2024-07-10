@@ -1,0 +1,16 @@
+kind: Installation
+metadata:
+  name: default
+spec:
+  # Configures Calico networking.
+  calicoNetwork:
+    # Note: The ipPools section cannot be modified post-install.
+    bgp: Disabled
+    ipPools:
+    - cidr: 10.244.1.0/24
+      encapsulation: VXLAN
+---
+kind: APIServer
+metadata:
+  name: default
+spec: {}
