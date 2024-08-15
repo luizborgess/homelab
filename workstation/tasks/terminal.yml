@@ -1,0 +1,31 @@
+- name: Install Zsh
+  apt:
+    name: zsh
+    state: present
+  become: true
+- name: Ensure zsh is the default shell
+  user:
+    name: "{{ ansbile_user }}"
+    shell: "/bin/zsh"
+  become: true
+- name: Download ohmyzsh
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    dest: "/home/{{ user }}/install.sh"
+    mode: '0755'
+- name: Check if ohmyzsh is installed
+  ansible.builtin.stat:
+    path: "/home/{{ user }}/.oh-my-zsh"
+  register: dir_check
+- name: Install ohmyzsh
+  ansible.builtin.script:
+    cmd: "/home/{{ user }}/install.sh"
+  when: not dir_check.stat.exists
+
+- name: Copy .zshrc to user's home directory
+  ansible.builtin.copy:
+    src: files/.zshrc
+    dest: /home/{{ user }}/.zshrc
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: '0644'

@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  vars:
+    user: luiz
+    ansbile_user: luiz
+  tasks:
+    - include: tasks/packages.yml
+    - include: tasks/terminal.yml
+    - include: tasks/terraform.yml
