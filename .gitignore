@@ -1,3 +1,4 @@
 **/**.vmdk
 **hosts
 **/**secret
+.idea
