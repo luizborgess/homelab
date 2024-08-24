@@ -27,4 +27,5 @@
     - telegram-desktop
     - steam
     - git
+    - nvtop
   become: true
