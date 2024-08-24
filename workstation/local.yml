@@ -4,6 +4,9 @@
     user: luiz
     ansbile_user: luiz
   tasks:
+    # Install general packages
     - include: tasks/packages.yml
+    # Configure zsh terminal
     - include: tasks/terminal.yml
+    # Install terraform
     - include: tasks/terraform.yml

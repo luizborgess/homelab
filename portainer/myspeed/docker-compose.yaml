@@ -8,6 +8,17 @@ services:
     restart: unless-stopped
     container_name: MySpeed
     image: 'germannewsmaker/myspeed:latest'
+
+  tunnel:
+    container_name: cloudflared-tunnel
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel run
+
+networks:
+  default:
+    external:
+      name: myspeed
 volumes:
   myspeed:
     external: false
