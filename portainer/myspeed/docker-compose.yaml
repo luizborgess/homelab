@@ -15,10 +15,6 @@ services:
     restart: unless-stopped
     command: tunnel run
 
-networks:
-  default:
-    external:
-      name: myspeed
 volumes:
   myspeed:
     external: false
