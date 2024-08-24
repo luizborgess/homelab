@@ -1,14 +1,13 @@
+global:
+  domain: argocd.hlspace.org # Dominio para o argocd
+
 server:
   ingress:
-    annotations:
-      ingress.kubernetes.io/rewrite-target: /
-      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     enabled: true
-    hosts:
-      - argo.homelab.com
-    https: true
-    ingressClassName: nginx
-    tls:
-      - secretName: homelabcert
-        hosts:
-          - argo.homelab.com
+    ingressClassName: nginx #ingress class instalada na parte 1
+    annotations:
+      cert-manager.io/cluster-issuer: cloudflare-issuer # Annotation para emitir o certificado utilizando cluster issuer
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true" 
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      external-dns.alpha.kubernetes.io/hostname: argocd.hlspace.org # Annotation para criar registro dns na cloudflare
+    tls: true

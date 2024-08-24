@@ -28,4 +28,5 @@
     - steam
     - git
     - nvtop
+    - thunderbird
   become: true
