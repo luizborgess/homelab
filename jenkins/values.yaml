@@ -1,0 +1,19 @@
+controller:
+  ingress:
+    enabled: true
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: jenkins.hlspace.org
+      cert-manager.io/cluster-issuer: cloudflare-issuer 
+    ingressClassName: nginx
+    hostName: jenkins.hlspace.org
+    tls:
+     - secretName: jenkins.hlspace.org
+       hosts:
+         - jenkins.hlspace.org
+agent:
+  privileged: true
+  volumes:
+    - type: HostPath
+      hostPath: /var/run/docker.sock
+      mountPath: /var/run/docker.sock
+  runAsGroup: 999
