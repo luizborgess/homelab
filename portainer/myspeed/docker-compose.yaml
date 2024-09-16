@@ -12,7 +12,7 @@ services:
   tunnel:
     container_name: cloudflared-tunnel
     image: cloudflare/cloudflared:latest
-    restart: unless-stopped
+#    restart: unless-stopped
     command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN}
 
 volumes:
