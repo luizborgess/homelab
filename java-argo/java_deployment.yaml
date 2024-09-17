@@ -5,7 +5,7 @@ metadata:
   labels:
     app: java
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: java
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: java
-        image: registry.hlspace.org/library/teste:latest
+        image: registry.hlspace.org/library/teste:28
         ports:
         - containerPort: 8080
 ---
