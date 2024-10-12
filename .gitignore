@@ -3,3 +3,7 @@
 **/**secret
 .idea
 **.env
+**.terraform
+**.tfstate**
+**terraform.**
+terraform

@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jenkins
+  namespace: argocd
+spec:
+  syncPolicy:
+    automated:
+      selfHeal: true
+  project: default
+  source:
+    chart: jenkins
+    repoURL: https://charts.jenkins.io
+    targetRevision: 5.6.1
+    helm:
+      releaseName: jenkins
+      values: |
+          controller:
+            ingress:
+              enabled: true
+              annotations:
+                external-dns.alpha.kubernetes.io/hostname: jenkins.hlspace.org
+                cert-manager.io/cluster-issuer: cloudflare-issuer 
+              ingressClassName: nginx
+              hostName: jenkins.hlspace.org
+              tls:
+              - secretName: jenkins.hlspace.org
+                hosts:
+                  - jenkins.hlspace.org
+          agent:
+            privileged: true
+            volumes:
+              - type: HostPath
+                hostPath: /var/run/docker.sock
+                mountPath: /var/run/docker.sock
+            runAsGroup: 999
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: jenkins

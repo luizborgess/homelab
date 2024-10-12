@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: longhorn
+  namespace: argocd
+spec:
+  syncPolicy:
+    automated:
+      selfHeal: true
+  project: default
+  source:
+    chart: longhorn
+    repoURL: https://charts.longhorn.io
+    targetRevision: 1.6.2
+    helm:
+      releaseName: longhorn
+      values: |
+        ingress:
+          enabled: true
+          ingressClassName: nginx
+          annotations:
+            cert-manager.io/cluster-issuer: cloudflare-issuer
+          host: longhorn.hlspace.org 
+          tls: true
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: longhorn-system
