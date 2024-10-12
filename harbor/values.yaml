@@ -1,9 +1,0 @@
-expose:
-  ingress:
-    className: nginx
-    annotations:
-      cert-manager.io/cluster-issuer: cloudflare-issuer
-      external-dns.alpha.kubernetes.io/hostname: registry.hlspace.org
-    hosts:
-      core: registry.hlspace.org
-externalURL: https://registry.hlspace.org
