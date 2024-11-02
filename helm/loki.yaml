@@ -16,6 +16,8 @@ spec:
       releaseName: loki
       values: |
         deploymentMode: SingleBinary
+        chunksCache:
+          enabled: false
         loki:
           commonConfig:
             replication_factor: 1
