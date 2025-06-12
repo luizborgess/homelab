@@ -10,4 +10,4 @@ server:
       nginx.ingress.kubernetes.io/ssl-passthrough: "true" 
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
       external-dns.alpha.kubernetes.io/hostname: argocd.hlspace.org # Annotation para criar registro dns na cloudflare
-    tls: true
+    tls: false
