@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    network_mode: 'host'
+    ports:
+      - "8096:8096"
+    volumes:
+      - jellyfin_config:/config
+      - jellyfin_cache:/cache
+      - /mnt/datashare/media:/media
+    environment:
+      TZ: America/Sao_Paulo
+
+volumes:
+  jellyfin_config:
+  jellyfin_cache:

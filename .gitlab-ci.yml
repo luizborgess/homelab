@@ -1,0 +1,27 @@
+image: willhallonline/ansible:latest
+
+stages:
+  - configure
+
+configure_machine:
+  stage: configure
+  rules:
+  - if: '$CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "merge_request_event"'
+    when: never
+  - if: '$CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"'
+    when: always
+  before_script:
+    - ansible --version
+    - mkdir -p ~/.ssh
+    - echo "$ANSIBLE_PRIVATE_KEY" > ~/.ssh/id_ed25519
+    
+    - chmod 600 ~/.ssh/id_ed25519
+    - ssh-keyscan "192.168.1.80" >> ~/.ssh/known_hosts
+  script:
+    - |
+      ansible all -i inventory -m ping
+      ansible-galaxy role install geerlingguy.node_exporter
+      ansible-galaxy collection install vladgh.samba
+      ansible-playbook -i inventory jellyfin.yml
+      ansible-playbook -i inventory pairdrop.yml
+      ansible-playbook -i inventory core.yml

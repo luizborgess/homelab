@@ -1,0 +1,22 @@
+---
+- name: Install core packages and configure system
+  hosts: all
+  become: yes
+  vars:
+    reboot_required: false
+  tasks:
+#    - name: Set the system hostname
+#      ansible.builtin.command:
+#        cmd: hostnamectl set-hostname "sirius.hlspace.org"
+    - name: Enable EPEL repository on Rocky Linux 9
+      ansible.builtin.dnf:
+        name: epel-release
+        state: present
+
+    - name: Instalar htop
+      dnf:
+        name:
+          - htop
+          - expect
+        state: present
+

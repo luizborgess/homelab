@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  pairdrop:
+    image: lscr.io/linuxserver/pairdrop:latest
+    container_name: pairdrop
+    restart: unless-stopped
+    ports:
+      - "3030:3000"
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      WS_FALLBACK: "false"
+      RATE_LIMIT: "false"
+      RTC_CONFIG: "false"
+      DEBUG_MODE: "false"
+      TZ: "America/Sao_Paulo"
