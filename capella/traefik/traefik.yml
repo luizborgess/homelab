@@ -1,0 +1,25 @@
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: true
+api:
+  dashboard: true
+  insecure: true
+log:
+  level: INFO
+  # Uncomment the next line to enable logging to a file
+  # filepath: /var/log/traefik.log
+
+accessLog: {}
+
+providers:
+  docker:
+    network: proxy
+    exposedByDefault: false
+#  file:
+#    filename: /etc/traefik/dynamic-configuration.yml
+
+entryPoints:
+  web:
+    address: ":80"
+    # Uncomment the next line if you're using Traefik v2
+    # asDefault: true
