@@ -11,7 +11,7 @@ services:
     volumes:
       - jellyfin_config:/config
       - jellyfin_cache:/cache
-      - /mnt/datashare/media:/media
+      - D:\media:/media
     environment:
       TZ: America/Sao_Paulo
     labels:
