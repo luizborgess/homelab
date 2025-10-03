@@ -19,6 +19,13 @@ services:
       - 'traefik.http.routers.jellyfin.entryPoints=web'
       - 'traefik.http.routers.jellyfin.rule=Host(`jellyfin.hlspace.org`)'
 
+  backup:
+    image: offen/docker-volume-backup:v2
+    restart: unless-stopped
+    env_file: ./backup.env #Dont forget to create and edit this file
+    volumes:
+      - jellyfin_config:/backup/jellyfin:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
 networks:
   proxy:
